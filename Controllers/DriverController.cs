@@ -2,32 +2,32 @@
 using Facul.Models;
 using Facul.Repository;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Facul.Controllers;
 
 [ApiController]
-[Route("driver/")]
-public class DriverController : ControllerBase
+[Route("[controller]")]
+public class DriverController : Controller
 {
-    private readonly DriverRepository _driverRepository;
-    public DriverController(DriverRepository driverRepository)
+    private readonly IDriverRepository _driverRepository;
+    public DriverController(IDriverRepository driverRepository)
     {
         _driverRepository = driverRepository;
     }
 
-    [HttpPost("/")]
+    [HttpPost]
     public async Task<IActionResult> CreateDriver(DriverInput input)
     {
         var driver = Driver.Create(input.Name, input.Email, input.Document, input.CarPlate);
-        await _driverRepository.Save(driver);
+        await _driverRepository.SaveAsync(driver);
         return Ok(driver.Id);
     }
 
-    [HttpGet("/{id}")]
+    [HttpGet]
+    [Route("{driverId}")]
     public async Task<IActionResult> GetDriver(string driverId)
     {
-        var driver = await _driverRepository.Get(driverId);
+        var driver = await _driverRepository.GetAsync(driverId);
         return Ok(driver);
     }
 }

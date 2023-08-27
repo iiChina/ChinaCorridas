@@ -7,6 +7,7 @@ public class Cpf
     public Cpf(string value)
     {
         if (!Validate(value)) throw new Exception("Invalid cpf");
+        Value = value;
     }
 
     private bool Validate(string cpf)
@@ -21,7 +22,7 @@ public class Cpf
 
     private string Clean(string cpf)
     {
-        return cpf.Replace("/\\D/g", "");
+        return cpf.Replace("/\\D/g", "").Trim();
     }
 
     private bool IsValidLength(string cpf)
@@ -32,9 +33,9 @@ public class Cpf
     private bool HasAllDigitsEqual(string cpf)
     {
         var firstDigit = cpf.Substring(0, 1);
-        foreach(var digit in cpf.Split())
+        foreach(var digit in cpf)
         {
-            if (digit != firstDigit) return false;
+            if (digit.ToString() != firstDigit) return false;
         }
         return true;
     }
@@ -42,9 +43,9 @@ public class Cpf
     private int CalculateDigit(string cpf, int factor)
     {
         var total = 0;
-        foreach (var digit in cpf.Split())
+        foreach (var digit in cpf)
         {
-            if (factor > 1) total += Int32.Parse(digit) * factor--;
+            if (factor > 1) total += Int32.Parse(digit.ToString()) * factor--;
         }
 
         var rest = total % 11;

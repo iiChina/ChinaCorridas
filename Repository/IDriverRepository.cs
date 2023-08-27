@@ -4,6 +4,6 @@ namespace Facul.Repository;
 
 public interface IDriverRepository
 {
-    public Task Save(Driver driver);
-    public Task<Driver> Get(string driverId);
+    public Task SaveAsync(Driver driver);
+    public Task<Driver> GetAsync(string driverId);
 }

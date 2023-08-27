@@ -18,7 +18,7 @@
         public static Passenger Create(string name, string email, string document)
         {
             var passengerId = UUIDGenerator.Create();
-            return new Passenger(passengerId, name, email, document);
+            return new Passenger(passengerId, name, document, email);
         }
 
     }

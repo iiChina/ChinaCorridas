@@ -8,8 +8,9 @@ public class Driver
     public Email Email { get; set; }
     public CarPlate CarPlate { get; set; }
 
-    private Driver(string id, string name, string email, string document, string carPlate)
+    public Driver(string id, string name, string email, string document, string carPlate)
     {
+        Id = id;
         Name = name;
         Document = new Cpf(document);
         Email = new Email(email);

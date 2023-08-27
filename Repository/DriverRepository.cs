@@ -11,24 +11,29 @@ namespace Facul.Repository
             _connection = connection;
         }
 
-        public async Task<Driver> Get(string driverId)
+        public async Task<Driver> GetAsync(string driverId)
         {
-            var driverData = await _connection.Query("", new Dictionary<string, object> { { "", driverId } });
+            var driverData = await _connection.QueryAsync("SELECT id, name, email, cpf, car_plate FROM drivers WHERE id = @Id", 
+                new Dictionary<string, object> { { "@Id", driverId } });
+
             driverData.Read();
             return new Driver(driverData.GetString(0), driverData.GetString(1), driverData.GetString(2), driverData.GetString(3), driverData.GetString(4));
         }
-
-        public async Task Save(Driver driver)
+        
+        public async Task SaveAsync(Driver driver)
         {
             var parameters = new Dictionary<string, object>()
             {
-                { "", driver.Id },
-                { "", driver.Name },
-                { "", driver.Email.Value },
-                { "", driver.Document.Value },
-                { "", driver.CarPlate.Value }
+                { "@Id", driver.Id },
+                { "@Name", driver.Name },
+                { "@Email", driver.Email.Value },
+                { "@CPF", driver.Document.Value },
+                { "@CarPlate", driver.CarPlate.Value }
             };
-            await _connection.Query("", parameters);
+            await _connection.ExecuteAsync($@"
+                INSERT INTO drivers (id, name, email, cpf, car_plate) 
+                VALUES (@Id, @Name, @Email, @CPF, @CarPlate)
+            ", parameters);
         }
     }
 }

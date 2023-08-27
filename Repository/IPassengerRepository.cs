@@ -5,7 +5,7 @@ namespace Facul.Repository
 {
     public interface IPassengerRepository
     {
-        public Task Save(Passenger passenger);
-        public Task<Passenger> Get(string passengerId);
+        public Task SaveAsync(Passenger passenger);
+        public Task<Passenger> GetAsync(string passengerId);
     }
 }

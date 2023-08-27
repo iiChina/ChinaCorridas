@@ -8,5 +8,6 @@ public class Position
     public Position(float lat, float lon, DateTime date)
     {
         Coord = new Coord(lat, lon);
+        Date = date;
     }
 }

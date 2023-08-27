@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Facul.Controllers;
 
 [ApiController]
-[Route("/passenger")]
-public class PassengerController : ControllerBase
+[Route("[controller]")]
+public class PassengerController : Controller
 {
     private readonly IPassengerRepository _passengerRepository;
 
@@ -16,18 +16,18 @@ public class PassengerController : ControllerBase
         _passengerRepository = passengerRepository;
     }
 
-    [HttpPost("/")]
+    [HttpPost]
     public async Task<IActionResult> CreatePassenger(PassengerInput input)
     {
         var passenger = Passenger.Create(input.Name, input.Email, input.Document);
-        await _passengerRepository.Save(passenger);
+        await _passengerRepository.SaveAsync(passenger);
         return Ok(passenger.Id);
     }
 
-    [HttpGet("/{id}")]
+    [HttpGet("{passengerId}")]
     public async Task<IActionResult> GetPassenger(string passengerId)
     {
-        var passenger = _passengerRepository.Get(passengerId);
+        var passenger = await _passengerRepository.GetAsync(passengerId);
         return Ok(passenger);
     }
 }

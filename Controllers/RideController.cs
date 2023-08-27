@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace Facul.Controllers;
 
 [ApiController]
-[Route("/")]
+[Route("[controller]")]
 public class RideController : Controller
 {
-    [HttpPost("/calculate_ride")]
+    [HttpPost]
+    [Route("calculate_ride")]
     public IActionResult Calc(CalculateRideInput input)
     {
         try

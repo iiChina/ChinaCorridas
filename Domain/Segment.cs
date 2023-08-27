@@ -4,13 +4,13 @@ namespace Facul.Domain
 {
     public class Segment
     {
-        public float Distance { get; }
+        public double Distance { get; }
         public DateTime Date { get; set; }
 
-        public Segment(float distance, DateTime date)
+        public Segment(double distance, DateTime date)
         {
-            if (!IsValidDistance()) throw new Exception("Invalid distance");
-            if (!IsValidDistance()) throw new Exception("Invalid date");
+            if (!IsValidDistance(distance)) throw new Exception("Invalid distance");
+            if (!IsValidDate(date)) throw new Exception("Invalid date");
 
             Distance = distance;
             Date = date;
@@ -20,8 +20,8 @@ namespace Facul.Domain
 
         public bool IsSunday() => Date.Day == 0;
 
-        public bool IsValidDistance() => Distance > 0;
+        public bool IsValidDistance(double distance) => distance > 0;
 
-        public bool IsValidDate() => Date != null;
+        public bool IsValidDate(DateTime date) => date != null;
     }
 }

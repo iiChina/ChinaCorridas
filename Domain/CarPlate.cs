@@ -14,7 +14,7 @@ namespace Facul.Domain
 
         private bool Validate(string carPlate)
         {
-            var regex = new Regex("/^[a-z]{3}[0-9]{4}$/");
+            var regex = new Regex("^[a-z]{3}[0-9]{4}$");
             return regex.IsMatch(carPlate.ToLower());
         }
     }
