@@ -6,4 +6,5 @@ public interface IDriverRepository
 {
     public Task SaveAsync(Driver driver);
     public Task<Driver> GetAsync(string driverId);
+    public Task<List<Driver>> GetAllAsync();
 }

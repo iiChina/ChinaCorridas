@@ -1,12 +1,14 @@
 ﻿using Facul.Domain;
 using Facul.Models;
 using Facul.Repository;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Facul.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[EnableCors("CorsPolicy")]
 public class PassengerController : Controller
 {
     private readonly IPassengerRepository _passengerRepository;
@@ -29,5 +31,12 @@ public class PassengerController : Controller
     {
         var passenger = await _passengerRepository.GetAsync(passengerId);
         return Ok(passenger);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPassengers()
+    {
+        var passengers = await _passengerRepository.GetAllAsync();
+        return Ok(passengers);
     }
 }

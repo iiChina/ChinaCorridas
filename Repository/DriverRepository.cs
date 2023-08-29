@@ -11,6 +11,20 @@ namespace Facul.Repository
             _connection = connection;
         }
 
+        public async Task<List<Driver>> GetAllAsync()
+        {
+            using var driversData = await _connection.QueryAsync("SELECT id, name, cpf, email, carPlate FROM drivers");
+
+            List<Driver> drivers= new List<Driver>();
+            while (driversData.Read())
+            {
+                drivers.Add(new Driver(driversData.GetString(0), driversData.GetString(1),
+                    driversData.GetString(2), driversData.GetString(3), driversData.GetString(4)));
+            }
+
+            return drivers;
+        }
+
         public async Task<Driver> GetAsync(string driverId)
         {
             var driverData = await _connection.QueryAsync("SELECT id, name, email, cpf, car_plate FROM drivers WHERE id = @Id", 

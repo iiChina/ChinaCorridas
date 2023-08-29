@@ -7,5 +7,6 @@ namespace Facul.Repository
     {
         public Task SaveAsync(Passenger passenger);
         public Task<Passenger> GetAsync(string passengerId);
+        public Task<List<Passenger>> GetAllAsync();
     }
 }
